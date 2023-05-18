@@ -21,11 +21,12 @@ import { useState } from 'react';
 const pre = [
   {
     user: 'bot',
-    message: 'Hello 👋, my name is Her Flourish. I am your financial friend.',
+    message:
+      'Hi 👋, I am Ann, your financial friend powered by AI. I am here to help answer any questions you have about personal finance, investments, budgeting, or anything else related to your financial well-being. Feel free to ask me anything, and I will do my best to provide you with helpful and informative answers.',
   },
   {
     user: 'bot',
-    message: 'How can I help you today?',
+    message: 'How can I help you today? 🤗',
   },
 ];
 
@@ -107,7 +108,7 @@ export default function Home() {
               <Box
                 backgroundColor={data.user === 'bot' ? 'gray.100' : 'gray.400'}
                 padding="12px"
-                maxW="60%"
+                maxW="80%"
                 borderRadius="20px"
               >
                 {data.message}
