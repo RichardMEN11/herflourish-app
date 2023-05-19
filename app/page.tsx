@@ -16,29 +16,18 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Image from 'next/image';
-import { useState } from 'react';
-
-const pre = [
-  {
-    user: 'bot',
-    message:
-      'Hi 👋, I am Ann, your financial friend powered by AI. I am here to help answer any questions you have about personal finance, investments, budgeting, or anything else related to your financial well-being. Feel free to ask me anything, and I will do my best to provide you with helpful and informative answers.',
-  },
-  {
-    user: 'bot',
-    message: 'How can I help you today? 🤗',
-  },
-];
+import { useEffect, useState } from 'react';
+import { useMessages } from '../hooks/useMessages';
 
 export default function Home() {
-  const [messages, setMessages] = useState(pre);
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessageVal, setNewMessageVal] = useState('');
+  const { messages, addMessage } = useMessages();
 
   const handleNewMessage = (e: any) => {
     e.preventDefault();
-    if (newMessage) {
-      setMessages([...messages, { user: 'user', message: newMessage }]);
-      setNewMessage('');
+    if (newMessageVal) {
+      addMessage(newMessageVal);
+      setNewMessageVal('');
     }
   };
 
@@ -85,6 +74,7 @@ export default function Home() {
         bgColor="rgba(217, 217, 217, 0.1);"
         paddingTop="100px"
         paddingX="10px"
+        paddingBottom="50px"
         overflow="scroll"
         gap="15px"
         display="flex"
@@ -127,8 +117,8 @@ export default function Home() {
           >
             <Input
               placeholder="Ask a question"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
+              value={newMessageVal}
+              onChange={(e) => setNewMessageVal(e.target.value)}
             />
             <Button type="submit" backgroundColor="gray.100">
               <Image src="/assets/send.png" alt="icon" width="50" height="50" />
