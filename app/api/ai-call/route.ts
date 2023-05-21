@@ -16,6 +16,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../../utils/firebase';
 import { PromptTemplate } from 'langchain/prompts';
+import { preProcessFile } from 'typescript';
 
 const client = createClient({
   url: process.env.REDIS_URL ?? 'redis://localhost:6379',
@@ -59,12 +60,16 @@ export async function POST(req: Request, response: Response) {
 
     const vectorStore = await RedisVectorStore.fromDocuments(
       docs,
-      new OpenAIEmbeddings(),
+      new OpenAIEmbeddings({
+        verbose: true,
+      }),
       {
         redisClient: client,
         indexName: 'docs',
       }
     );
+
+    console.log(vectorStore);
     /* Create the chain */
     const chain = ConversationalRetrievalQAChain.fromLLM(
       llm,
