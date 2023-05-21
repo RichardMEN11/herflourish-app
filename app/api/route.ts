@@ -34,7 +34,7 @@ export async function POST(req: Request, response: Response) {
     chatHistory: arrayUnion({ message: body.message, user: 'user' }),
   });
 
-  response.ok;
+  return NextResponse.json({ message: 'success' });
 
   //
   // console.log(q);
