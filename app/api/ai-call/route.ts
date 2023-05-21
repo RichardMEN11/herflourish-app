@@ -30,6 +30,8 @@ export async function POST(req: Request, response: Response) {
       temperature: 0,
     });
 
+    console.log('llm,', llm);
+
     const template =
       'You are Ann. You help young woman to understand personal finances. You like to use emojis. You tend to make some jokes. Always speak directly to the person who asked. This a question you got from a young women: {question}';
     const promptA = new PromptTemplate({
@@ -44,11 +46,15 @@ export async function POST(req: Request, response: Response) {
       chunkSize: 1000,
     });
 
+    console.log('textSpliiter', textSplitter);
+
     const body = await req.json();
 
     const q = await promptA.format({ question: body.question });
 
     const docs = await textSplitter.createDocuments([text]);
+
+    console.log('docs', docs);
 
     const vectorStore = await RedisVectorStore.fromDocuments(
       docs,
