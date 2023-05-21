@@ -15,6 +15,7 @@ import {
   Spacer,
   VStack,
   Text,
+  keyframes,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -22,7 +23,7 @@ import { useMessages } from '../../hooks/useMessages';
 
 export default function Ann() {
   const [newMessageVal, setNewMessageVal] = useState('');
-  const { messages, addMessage } = useMessages();
+  const { messages, addMessage, isLoading } = useMessages();
 
   const handleNewMessage = (e: any) => {
     e.preventDefault();
@@ -96,6 +97,7 @@ export default function Ann() {
                   src="https://i.pinimg.com/550x/50/b2/6c/50b26ce6d2bc8adcf0e9a720c6fdc3f9.jpg"
                 />
               )}
+
               <Box
                 backgroundColor={data.user === 'bot' ? 'gray.100' : 'gray.400'}
                 padding="12px"
@@ -108,6 +110,39 @@ export default function Ann() {
             </Flex>
           );
         })}
+        {isLoading && (
+          <Flex justifyContent={'flex-start'} w="100%" gap="10px">
+            <Avatar
+              size="xs"
+              mt="auto"
+              src="https://i.pinimg.com/550x/50/b2/6c/50b26ce6d2bc8adcf0e9a720c6fdc3f9.jpg"
+            />
+
+            <HStack>
+              <Circle
+                size="1"
+                bgColor="gray.400"
+                animation={`${keyframe_dot1} infinite 1s linear`}
+              ></Circle>
+              <Circle
+                size="1"
+                bgColor="gray.400"
+                animation={`${keyframe_dot1} infinite 1s linear`}
+                style={{
+                  animationDelay: '.5s',
+                }}
+              ></Circle>
+              <Circle
+                size="1"
+                bgColor="gray.400"
+                animation={`${keyframe_dot1} infinite 1s linear`}
+                style={{
+                  animationDelay: '.7s',
+                }}
+              ></Circle>
+            </HStack>
+          </Flex>
+        )}
       </Box>
       <HStack p="5px 15px" backgroundColor="#fff">
         <form onSubmit={(e) => handleNewMessage(e)} style={{ width: '100%' }}>
@@ -121,7 +156,11 @@ export default function Ann() {
               value={newMessageVal}
               onChange={(e) => setNewMessageVal(e.target.value)}
             />
-            <Button type="submit" backgroundColor="gray.100">
+            <Button
+              type="submit"
+              backgroundColor="gray.100"
+              isDisabled={isLoading}
+            >
               <Image src="/assets/send.png" alt="icon" width="50" height="50" />
             </Button>
           </FormControl>
@@ -151,3 +190,15 @@ export default function Ann() {
     </Grid>
   );
 }
+
+const keyframe_dot1 = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(0.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
