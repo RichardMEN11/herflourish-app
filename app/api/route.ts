@@ -24,6 +24,7 @@ const chatHistory = [
 
 const llm = new OpenAI({
   modelName: 'gpt-3.5-turbo',
+  openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
 const client = createClient({
