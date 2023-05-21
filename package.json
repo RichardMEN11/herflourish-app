@@ -27,5 +27,8 @@
     "redis": "^4.6.6",
     "typescript": "5.0.4",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.1"
   }
 }
