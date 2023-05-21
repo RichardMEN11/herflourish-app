@@ -37,7 +37,7 @@ export default function Home() {
           w="80%"
           onClick={() =>
             router.push(
-              'https://www.figma.com/proto/Fm3lrMa5a9FeQzaHbvYS9D/HerFlourish?node-id=144-4&starting-point-node-id=99%3A97'
+              'https://www.figma.com/proto/Fm3lrMa5a9FeQzaHbvYS9D/HerFlourish?node-id=99-97&starting-point-node-id=99%3A97'
             )
           }
         >
