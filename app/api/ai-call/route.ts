@@ -18,9 +18,7 @@ import { db } from '../../../utils/firebase';
 import { PromptTemplate } from 'langchain/prompts';
 import { NextResponse } from 'next/server';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 const client = createClient({
   url: process.env.REDIS_URL ?? 'redis://localhost:6379',
