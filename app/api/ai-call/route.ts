@@ -83,7 +83,7 @@ export async function POST(req: Request, response: Response) {
       chat_history: (doc.data() as any).chatHistory,
     });
 
-    console.log(res);
+    console.log(res.data);
 
     if (res) {
       await updateDoc(doc.ref, {
