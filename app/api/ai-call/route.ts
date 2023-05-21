@@ -17,32 +17,32 @@ import {
 import { db } from '../../../utils/firebase';
 import { PromptTemplate } from 'langchain/prompts';
 
-const llm = new OpenAI({
-  modelName: 'gpt-3.5-turbo',
-  openAIApiKey: process.env.OPENAI_API_KEY,
-  temperature: 0,
-});
-
-const client = createClient({
-  url: process.env.REDIS_URL ?? 'redis://localhost:6379',
-});
-client.connect();
-
-const template =
-  'You are Ann. You help young woman to understand personal finances. You like to use emojis. You tend to make some jokes. Always speak directly to the person who asked. This a question you got from a young women: {question}';
-const promptA = new PromptTemplate({
-  template,
-  inputVariables: ['question'],
-});
-
-const jsonDirectory = path.join(process.cwd(), 'data');
-const text = fs.readFileSync(jsonDirectory + '/test.txt', 'utf8');
-
-const textSplitter = new RecursiveCharacterTextSplitter({
-  chunkSize: 1000,
-});
-
 export async function POST(req: Request, response: Response) {
+  const llm = new OpenAI({
+    modelName: 'gpt-3.5-turbo',
+    openAIApiKey: process.env.OPENAI_API_KEY,
+    temperature: 0,
+  });
+
+  const client = createClient({
+    url: process.env.REDIS_URL ?? 'redis://localhost:6379',
+  });
+  client.connect();
+
+  const template =
+    'You are Ann. You help young woman to understand personal finances. You like to use emojis. You tend to make some jokes. Always speak directly to the person who asked. This a question you got from a young women: {question}';
+  const promptA = new PromptTemplate({
+    template,
+    inputVariables: ['question'],
+  });
+
+  const jsonDirectory = path.join(process.cwd(), 'data');
+  const text = fs.readFileSync(jsonDirectory + '/test.txt', 'utf8');
+
+  const textSplitter = new RecursiveCharacterTextSplitter({
+    chunkSize: 1000,
+  });
+
   const body = await req.json();
 
   const q = await promptA.format({ question: body.question });
