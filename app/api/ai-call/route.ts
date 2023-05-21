@@ -24,6 +24,7 @@ client.connect();
 
 export async function POST(req: Request, response: Response) {
   try {
+    console.log('ghellod');
     const llm = new OpenAI({
       modelName: 'gpt-3.5-turbo',
       openAIApiKey: process.env.OPENAI_API_KEY,
