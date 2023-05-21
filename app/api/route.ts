@@ -7,6 +7,7 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import * as fs from 'fs';
 import path from 'path';
 import { createClient } from 'redis';
+import { PromptTemplate } from 'langchain/prompts';
 
 // Dummy data
 const chatHistory = [
@@ -42,6 +43,17 @@ export async function POST(req: Request, response: Response) {
   const jsonDirectory = path.join(process.cwd(), 'data');
   const text = fs.readFileSync(jsonDirectory + '/test.txt', 'utf8');
 
+  const template =
+    'You are Ann. You help young woman to understand personal finances. You like to use emojis. This a question you got from a young women: {question}';
+  const promptA = new PromptTemplate({
+    template,
+    inputVariables: ['question'],
+  });
+
+  const q = await promptA.format({ question: body });
+
+  console.log(q);
+
   if (body) {
     chatHistory.push({
       user: 'user',
@@ -65,7 +77,10 @@ export async function POST(req: Request, response: Response) {
   /* Create the chain */
   const chain = ConversationalRetrievalQAChain.fromLLM(
     llm,
-    vectorStore.asRetriever()
+    vectorStore.asRetriever(),
+    {
+      questionGeneratorTemplate: q,
+    }
   );
   /* Ask it a question */
   const question = body;
