@@ -22,11 +22,6 @@ const chatHistory = [
   },
 ];
 
-const llm = new OpenAI({
-  modelName: 'gpt-3.5-turbo',
-  openAIApiKey: process.env.OPENAI_API_KEY,
-});
-
 const client = createClient({
   url: process.env.REDIS_URL ?? 'redis://localhost:6379',
 });
@@ -40,6 +35,11 @@ export async function GET() {
 // update chat history
 export async function POST(req: Request, response: Response) {
   const body = await req.json();
+
+  const llm = new OpenAI({
+    modelName: 'gpt-3.5-turbo',
+    openAIApiKey: process.env.OPENAI_API_KEY,
+  });
 
   const jsonDirectory = path.join(process.cwd(), 'data');
   const text = fs.readFileSync(jsonDirectory + '/test.txt', 'utf8');
